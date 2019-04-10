@@ -1,0 +1,17 @@
+{
+    "projectName": "TestOrg",
+    "username": "vlyashinsky@testorg.com",
+    "id": "98509b70-58c2-11e9-b1c1-c9f172e29e7f",
+    "namespace": "",
+    "orgType": "developer",
+    "loginUrl": "https://login.salesforce.com/",
+    "instanceUrl": "https://ap8.salesforce.com",
+    "workspace": "C:\\Users\\HoollywooD\\Documents",
+    "subscription": [
+        "ApexClass",
+        "ApexComponent",
+        "ApexPage",
+        "ApexTrigger",
+        "StaticResource"
+    ]
+}

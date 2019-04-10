@@ -1,0 +1,149 @@
+<apex:page showHeader="true" sidebar="true" controller="ProductPaymentController" applyHtmlTag="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <title>Product Payment</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <apex:slds />
+        </head>   
+        <body>
+            <div class="slds-scope">
+                <apex:form>
+                    <apex:actionFunction name="payment" action="{!payment}" rerender="contact-info,alert-container">
+                        <apex:param name="email" value="" />
+                        <apex:param name="firstName" value="" />
+                        <apex:param name="lastName" value="" />
+                        <apex:param name="unitCount" value="" />
+                    </apex:actionFunction>
+                </apex:form>
+                <apex:form>
+                    <apex:actionFunction name="closeAlert" action="{!alertBox.close}" rerender="alert-container" />
+                </apex:form>
+                <apex:outputPanel id="alert-container" layout="none">
+                    <apex:outputPanel id="alert-wrapper" rendered="{!alertBox.status}">
+                        <div class="slds-notify slds-notify_alert slds-theme_alert-texture {!IF(alertBox.isSuccess, 'slds-theme_info', 'slds-theme_error')}" role="alert">
+                            <h2>
+                                {!alertBox.message}
+                            </h2>
+                            <div class="slds-notify__close">
+                                <button class="slds-button slds-button_icon slds-button_icon-small slds-button_icon-inverse" onclick="closeAlert()" title="Close">
+                                    <svg class="slds-button__icon" aria-hidden="true">
+                                        <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <div class="slds-p-bottom_x-large">
+                    <div class="slds-page-header">
+                        <div class="slds-page-header__row slds-grid">
+                                <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
+                                    <div class="slds-text-heading_medium">
+                                        Contact Information
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
+                                    <div class="slds-text-heading_medium">
+                                        Product Information
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
+                        <apex:outputPanel id="contact-info" layout="block">
+                            <div class="slds-form-element slds-p-bottom_small {!IF(contactInfo.emailError, 'slds-has-error', '')}">
+                                <label class="slds-form-element__label" for="text-input-id-email">
+                                    <abbr class="slds-required" title="required">* </abbr>Email
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <input id="text-input-id-email" placeholder="Email" class="slds-input" type="email" value="{!contactInfo.email}" />
+                                </div>
+                            </div>
+                            <div class="slds-form-element slds-p-bottom_small {!IF(contactInfo.firstNameError, 'slds-has-error', '')}">
+                                <label class="slds-form-element__label" for="text-input-id-first-name">
+                                    First Name
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <input id="text-input-id-first-name" placeholder="First Name" class="slds-input" type="text" value="{!contactInfo.firstName}" />
+                                </div>
+                            </div>
+                            <div class="slds-form-element {!IF(contactInfo.lastNameError, 'slds-has-error', '')}">
+                                <label class="slds-form-element__label" for="text-input-id-last-name">
+                                    Last Name
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <input id="text-input-id-last-name" placeholder="Last Name" class="slds-input" type="text" value="{!contactInfo.lastName}" />
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
+                        <div>
+                            <div class="slds-form-element slds-p-bottom_small">
+                                <span class="slds-form-element__label">Product Name</span>
+                                <div class="slds-form-element__control">
+                                    <span class="slds-form-element__static">{!product.name}</span>
+                                </div>
+                            </div>
+                            <div class="slds-form-element slds-p-bottom_small">
+                                <span class="slds-form-element__label">Cost</span>
+                                <div class="slds-form-element__control">
+                                    <span class="slds-form-element__static">{!product.Unit_Price__c} $</span>
+                                </div>
+                            </div>
+                            <div class="slds-form-element slds-p-bottom_small">
+                                <label class="slds-form-element__label" for="text-input-id-unit-count">Unit Count</label>
+                                <div class="slds-form-element__control">
+                                    <input class="slds-input" id="text-input-id-unit-count" type="number" placeholder="1" value="1" min="1" />
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <span class="slds-form-element__label">Total Amount</span>
+                                <div class="slds-form-element__control">
+                                    <apex:outputPanel id="total-amount">
+                                        <span class="slds-form-element__static" id="span-id-total-amount" data-price="{!product.Unit_Price__c}">
+                                            {!product.Unit_Price__c} $
+                                        </span>
+                                    </apex:outputPanel>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-docked-form-footer">
+                    <div class="slds-button-group" role="group">
+                        <apex:form>
+                            <apex:commandButton styleClass="slds-button slds-button_neutral" value="To Previous Page" action="{!redirectToPrevPage}" id="btnRedirectToPreviousPage" />
+                        </apex:form>
+                        <button class="slds-button slds-button_brand" onclick="onClickPaymentHandler()">
+                            Buy
+                        </button>
+                    </div>
+                </div>
+                <script>
+                    function onClickPaymentHandler() {
+                        var emailElement = document.getElementById('text-input-id-email');
+                        var firstNameElement = document.getElementById('text-input-id-first-name');
+                        var lastNameElement = document.getElementById('text-input-id-last-name');
+                        var unitCountElement = document.getElementById('text-input-id-unit-count');
+                        payment(emailElement.value, firstNameElement.value, lastNameElement.value, unitCountElement.value);
+                    }
+
+                    function onChangeUnitCountHandler(event) {
+                        var unitCount = +event.target.value;
+                        var totalAmountElement = document.getElementById('span-id-total-amount');
+                        totalAmountElement.textContent = (+totalAmountElement.dataset.price * unitCount).toFixed(2) + ' $';
+                    }
+
+                    var unitCountElement = document.getElementById('text-input-id-unit-count');
+                    unitCountElement.addEventListener('change', onChangeUnitCountHandler, false);
+                </script>
+            </div>
+        </body>
+    </html>
+</apex:page>

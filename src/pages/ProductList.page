@@ -1,0 +1,99 @@
+<apex:page showHeader="true" sidebar="true" controller="ProductListController">
+    <style>
+        .product-table .image {
+        	width: 20%;
+        }
+        .product-table .title {
+        	width: 14%;
+        }
+        .product-table .description {
+        	width: 50%;        	
+        }
+        .product-table .cost {
+        	width: 8%;
+        }
+        .product-table .buy {
+        	width: 8%;
+        }
+        .title {
+        	color: rgb(0, 95, 178);
+        	font-weight: bold !important;
+        }
+    	.wrap {
+        	white-space: normal !important;
+        }
+    </style>
+    <apex:slds />
+    <div class="slds-p-horizontal_medium">
+        <div class="slds-text-heading_medium slds-p-vertical_medium title">
+            Product List
+        </div>
+        <table class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols product-table" role="grid">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="image" scope="col">
+                        <div class="slds-truncate slds-text-heading_medium" title="IMAGE">IMAGE</div>
+                    </th>
+                    <th class="title" scope="col"></th>
+                    <th class="description" scope="col">
+                        <div class="slds-truncate slds-text-heading_medium" title="DESCRIPTION">DESCRIPTION</div>
+                    </th>
+                    <th class="cost" scope="col">
+                        <div class="slds-truncate slds-text-heading_medium" title="COST">COST</div>
+                    </th>
+                    <th class="buy" scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!productList}" var="product" id="theRepeat">
+                    <tr class="slds-hint-parent">
+                        <td data-label="Image">
+                            <img width="130" alt="Product Image" src="{!product.Image_Url__c}"/>
+                        </td>
+                        <td data-label="Name">
+                            <apex:form>
+                                <div class="slds-truncate wrap" title="Name">
+                                    <apex:commandLink value="" action="{!redirectToDetails}" id="nameRedirectToDetails">
+                                        {!product.Name}
+                                        <apex:param name="id" value="{!product.Id}" assignTo="{!selectedId}"/>
+                                    </apex:commandLink>
+                                </div>
+                            </apex:form>
+                        </td>
+                        <td data-label="Description">
+                            <div class="slds-truncate slds-text-body_regular wrap" title="Description">
+                                <apex:form>
+                                    <apex:outputText rendered="{!LEN(product.Product_Description__c) > 100}">
+                                        {!LEFT(product.Product_Description__c, 100)}&hellip;
+                                        <apex:commandLink value="" action="{!redirectToDetails}" id="moreRedirectToDetails">
+                                            More
+                                            <apex:param name="id" value="{!product.Id}" assignTo="{!selectedId}"/>
+                                        </apex:commandLink>
+                                    </apex:outputText>
+                                </apex:form>
+                                <apex:outputText rendered="{!LEN(product.Product_Description__c) < 100}">
+                                    {!product.Product_Description__c}
+                                </apex:outputText>
+                            </div>
+                        </td>
+                        <td data-label="Cost">
+                            <div class="slds-truncate wrap" title="Cost">
+                                <div class="slds-text-body_regular">{!product.Unit_Price__c} $</div>
+                            </div>
+                        </td>
+                        <td data-label="Buy">
+                            <div class="slds-truncate wrap">
+                                <apex:form>
+                                    <apex:commandLink value="" styleClass="slds-button slds-button_brand" action="{!redirectToPayment}" id="btnRedirectToPayment">
+                                        Buy
+                                        <apex:param name="id" value="{!product.Id}" assignTo="{!selectedId}"/>
+                                    </apex:commandLink>
+                                </apex:form>
+                            </div>
+                        </td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+    </div>
+</apex:page>

@@ -1,0 +1,54 @@
+<!--
+  @Page Name          : ProductDetails.page
+  @Description        : 
+  @Author             : ChangeMeIn@UserSettingsUnder.SFDoc
+  @Group              : 
+  @Last Modified By   : ChangeMeIn@UserSettingsUnder.SFDoc
+  @Last Modified On   : 07.04.2019, 14:19:38
+  @Modification Log   : 
+  ==============================================================================
+  Ver         Date                     Author      		      Modification
+  ==============================================================================
+  1.0    07.04.2019, 14:17:35   ChangeMeIn@UserSettingsUnder.SFDoc     Initial Version
+-->
+<apex:page showHeader="true" sidebar="true" controller="ProductDetailsController">
+    <apex:slds />
+    <div class="slds-p-bottom_x-large">
+        <div class="slds-page-header">
+            <div class="slds-page-header__row slds-align_absolute-center">
+                <div class="slds-text-heading_medium">
+                    {!product.Name}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-grid">
+        <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
+            <img width="250" alt="Product Image" src="{!product.Image_Url__c}"/>
+        </div>
+        <div class="slds-col slds-size_1-of-2">
+            <div class="slds-p-vertical_small">
+                <div class="slds-truncate slds-text-heading_small">AMOUNT:</div>
+                <div class="slds-text-body_regular">{!product.Units_Avail__c}</div>
+            </div>
+            <div class="slds-p-vertical_small">
+                <div class="slds-truncate slds-text-heading_small">PRICE:</div>
+                <div class="slds-text-body_regular">{!product.Unit_Price__c} $</div>
+            </div>
+            <div class="slds-p-vertical_small">
+                <div class="slds-truncate slds-text-heading_small">DESCRIPTION:</div>
+                <div class="slds-text-body_regular">{!product.Product_Description__c}</div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-docked-form-footer">
+        <div class="slds-button-group" role="group">
+            <apex:form>
+                <apex:commandButton styleClass="slds-button slds-button_neutral" value="To Shopping" action="{!redirectToShop}" id="btnRedirectToShop" />
+            </apex:form>
+            <apex:form>
+                <apex:commandButton styleClass="slds-button slds-button_brand" value="Buy" action="{!redirectToPayment}" id="btnRedirectToPayment" />
+            </apex:form>
+        </div>
+    </div>
+</apex:page>
