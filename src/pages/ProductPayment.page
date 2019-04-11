@@ -37,23 +37,21 @@
                         </div>
                     </apex:outputPanel>
                 </apex:outputPanel>
-                <div class="slds-p-bottom_x-large">
-                    <div class="slds-page-header">
-                        <div class="slds-page-header__row slds-grid">
-                                <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
-                                    <div class="slds-text-heading_medium">
-                                        Contact Information
-                                    </div>
+                <div class="slds-page-header">
+                    <div class="slds-page-header__row slds-grid">
+                            <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
+                                <div class="slds-text-heading_medium">
+                                    Contact Information
                                 </div>
-                                <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
-                                    <div class="slds-text-heading_medium">
-                                        Product Information
-                                    </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
+                                <div class="slds-text-heading_medium">
+                                    Product Information
                                 </div>
-                        </div>
+                            </div>
                     </div>
                 </div>
-                <div class="slds-grid">
+                <div class="slds-grid slds-p-vertical_large">
                     <div class="slds-col slds-size_1-of-2 slds-align_absolute-center">
                         <apex:outputPanel id="contact-info" layout="block">
                             <div class="slds-form-element slds-p-bottom_small {!IF(contactInfo.emailError, 'slds-has-error', '')}">
@@ -115,7 +113,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="slds-docked-form-footer">
+                <footer class="slds-align_absolute-center">
                     <div class="slds-button-group" role="group">
                         <apex:form>
                             <apex:commandButton styleClass="slds-button slds-button_neutral" value="To Previous Page" action="{!redirectToPrevPage}" id="btnRedirectToPreviousPage" />
@@ -124,7 +122,7 @@
                             Buy
                         </button>
                     </div>
-                </div>
+                </footer>
                 <script>
                     function onClickPaymentHandler() {
                         var emailElement = document.getElementById('text-input-id-email');
